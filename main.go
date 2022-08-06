@@ -10,9 +10,15 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type Person struct {
-	Name     string `json:"name"`
-	Nickname string `json:"nickname"`
+type Journey struct {
+	DepTime        string `json:"departureTime"`
+	RetTime        string `json:"returnTime"`
+	DepStationId   int    `json:"departureStationId"`
+	DepStationName string `json:"departureStationName"`
+	RetStationId   int    `json:"retStationId"`
+	RetStationName string `json:"returnStationName"`
+	Distance       int    `json:"distance"`
+	Duration       int    `json:"duration"`
 }
 
 const (
@@ -43,51 +49,38 @@ func OpenConnection() *sql.DB {
 func GETHandler(w http.ResponseWriter, r *http.Request) {
 	db := OpenConnection()
 
-	rows, err := db.Query("SELECT * FROM person")
+	rows, err := db.Query("SELECT * FROM journey")
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("GET")
 
-	var people []Person
+	var journeys []Journey
 
 	for rows.Next() {
-		var person Person
-		rows.Scan(&person.Name, &person.Nickname)
-		people = append(people, person)
+		var journey Journey
+		rows.Scan(
+			&journey.DepTime,
+			&journey.RetTime,
+			&journey.DepStationId,
+			&journey.DepStationName,
+			&journey.RetStationId,
+			&journey.RetStationName,
+			&journey.Distance,
+			&journey.Duration)
+		journeys = append(journeys, journey)
 	}
 
-	peopleBytes, _ := json.MarshalIndent(people, "", "\t")
+	journeyBytes, _ := json.MarshalIndent(journeys, "", "\t")
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(peopleBytes)
+	w.Write(journeyBytes)
 
 	defer rows.Close()
 	defer db.Close()
 }
 
-func POSTHandler(w http.ResponseWriter, r *http.Request) {
-	db := OpenConnection()
-
-	var p Person
-	err := json.NewDecoder(r.Body).Decode(&p)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	sqlStatement := `INSERT INTO person (name, nickname) VALUES ($1, $2)`
-	_, err = db.Exec(sqlStatement, p.Name, p.Nickname)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	defer db.Close()
-}
-
 func main() {
 	http.HandleFunc("/api", GETHandler)
-	http.HandleFunc("/insert", POSTHandler)
 	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
 }
