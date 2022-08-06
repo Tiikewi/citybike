@@ -11,11 +11,8 @@ func GETHandler(w http.ResponseWriter, r *http.Request) {
 	limit := r.URL.Query().Get("limit")
 	page := r.URL.Query().Get("page")
 
-	var paginationReq PaginationReq
-	paginationReq = getUrlParams(limit, page)
-
-	var pag Pagination
-	pag = pagination(paginationReq)
+	var paginationReq PaginationReq = getUrlParams(limit, page)
+	var pag Pagination = pagination(paginationReq)
 
 	rows := getJourneys(pag)
 
