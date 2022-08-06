@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	readCSV()
+	// readCSV()
 	http.HandleFunc("/api", GETHandler)
 	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
 }

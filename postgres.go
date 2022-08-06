@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 const (
@@ -28,4 +29,19 @@ func OpenConnection() *sql.DB {
 	}
 
 	return db
+}
+
+func getJourneys(p Pagination) *sql.Rows {
+	db := OpenConnection()
+
+	sqlStatement := `SELECT * FROM journey WHERE id > $1 LIMIT $2;`
+	rows, err := db.Query(sqlStatement, p.Offset, p.Limit)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	log.Println("GET journeys")
+
+	return rows
 }

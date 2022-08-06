@@ -2,24 +2,29 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func GETHandler(w http.ResponseWriter, r *http.Request) {
-	db := OpenConnection()
+	limit := r.URL.Query().Get("limit")
+	page := r.URL.Query().Get("page")
 
-	rows, err := db.Query("SELECT * FROM journey")
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("GET")
+	var paginationReq PaginationReq
+	paginationReq = getUrlParams(limit, page)
+
+	var pag Pagination
+	pag = pagination(paginationReq)
+
+	rows := getJourneys(pag)
 
 	var journeys []Journey
 
 	for rows.Next() {
 		var journey Journey
 		rows.Scan(
+			&journey.ID,
 			&journey.DepTime,
 			&journey.RetTime,
 			&journey.DepStationId,
@@ -37,5 +42,23 @@ func GETHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(journeyBytes)
 
 	defer rows.Close()
-	defer db.Close()
+}
+
+func getUrlParams(limit string, page string) PaginationReq {
+	limitInt, err := strconv.Atoi(limit)
+	if err != nil {
+		fmt.Println("Incorrect limit param")
+	}
+	pageInt, err := strconv.Atoi(page)
+	if err != nil {
+		fmt.Println("Incorrect page param")
+	}
+
+	fmt.Printf("limit: %v, page: %v\n", limitInt, pageInt)
+
+	var paginationReq PaginationReq
+	paginationReq.Limit = limitInt
+	paginationReq.Page = pageInt
+
+	return paginationReq
 }

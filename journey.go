@@ -1,6 +1,7 @@
 package main
 
 type Journey struct {
+	ID             int    `json:"id"`
 	DepTime        string `json:"departureTime"`
 	RetTime        string `json:"returnTime"`
 	DepStationId   int    `json:"departureStationId"`
