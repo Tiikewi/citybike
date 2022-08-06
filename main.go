@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -13,9 +14,9 @@ import (
 )
 
 func main() {
-	// http.HandleFunc("/api", GETHandler)
-	// log.Fatal(http.ListenAndServe("[::1]:8080", nil))
 	readCSV()
+	http.HandleFunc("/api", GETHandler)
+	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
 }
 
 func readCSV() {
@@ -33,6 +34,8 @@ func readCSV() {
 		panic(err)
 	}
 
+	db := OpenConnection()
+
 	for {
 		line, err := csvReader.Read()
 		if err == io.EOF {
@@ -43,13 +46,12 @@ func readCSV() {
 		}
 
 		// validate line
-		fmt.Println(len(line))
 		departureTime := line[0]
 		returnTime := line[1]
 		depID := line[2]
-		// depName := line[3]
+		depName := line[3]
 		returnID := line[4]
-		// returnName := line[5]
+		returnName := line[5]
 		distance := line[6]
 		duration := line[7]
 
@@ -57,11 +59,41 @@ func readCSV() {
 
 		// if line data format is ok, add to journey table
 		if validateInt(inputNums[:]) && validateTime(departureTime) && validateTime(returnTime) {
-			fmt.Println(line)
+			distanceInt, err := strconv.Atoi(distance)
+			if err != nil {
+				log.Fatal(err)
+			}
+			durationInt, err := strconv.Atoi(duration)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			if distanceInt < 10 || durationInt < 10 {
+				continue
+			}
+
+			sqlStatement := `INSERT INTO journey (departure_time, return_time, departure_station_id,
+				 departure_station_name, return_station_id, return_station_name, distance, duration)
+				VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`
+
+			_, err = db.Exec(
+				sqlStatement,
+				departureTime,
+				returnTime,
+				depID,
+				depName,
+				returnID,
+				returnName,
+				distance,
+				duration)
+			if err != nil {
+				panic(err)
+			}
+
 		}
-
 	}
-
+	fmt.Println("CSV file added to db")
+	defer db.Close()
 }
 
 func validateTime(timeString string) bool {
