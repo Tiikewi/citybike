@@ -17,6 +17,7 @@ export default function CustomPaginationActionsTable({
   handleChangePage,
   handleRowsPerPage,
   limit,
+  total,
 }) {
   const formatDuration = (time) => {
     var seconds = time % 60;
@@ -71,7 +72,7 @@ export default function CustomPaginationActionsTable({
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[10]}
-              count={800000}
+              count={total}
               page={page}
               onPageChange={handleChangePage}
               rowsPerPage={limit}

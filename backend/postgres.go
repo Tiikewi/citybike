@@ -45,3 +45,14 @@ func getJourneys(p Pagination) *sql.Rows {
 
 	return rows
 }
+
+func getJourneyAmount() *sql.Row {
+	db := OpenConnection()
+
+	row := db.QueryRow("SELECT count(*) AS exact_count FROM journey;")
+	defer db.Close()
+
+	log.Println("GET journey amount")
+
+	return row
+}

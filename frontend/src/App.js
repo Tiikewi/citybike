@@ -6,6 +6,7 @@ function App() {
   const [journeys, setJourneys] = useState([]);
   const [journeyPage, setJourneyPage] = useState(0);
   const [journeyLimit, setJourneyLimit] = useState(10);
+  const [totalJourneys, setTotalJourneys] = useState(0);
 
   useEffect(() => {
     axios.defaults.baseURL = "http://[::1]:8080/";
@@ -14,6 +15,9 @@ function App() {
         `api?limit=${journeyLimit}&page=${journeyPage}`
       );
       setJourneys(response.data);
+
+      const response2 = await axios.get("api/journey/rows");
+      setTotalJourneys(response2.data);
     }
     fetchJourneys();
   }, [journeyLimit, journeyPage]);
@@ -34,6 +38,7 @@ function App() {
         handleChangePage={handlePageChange}
         handleRowsPerPage={handleRowsPerPage}
         limit={journeyLimit}
+        total={totalJourneys}
       ></JourneyList>
     </div>
   );
