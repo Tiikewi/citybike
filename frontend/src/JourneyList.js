@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -38,12 +38,37 @@ export default function CustomPaginationActionsTable({
 
     return `${day}.${month}.${year} ${time}`;
   };
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      // Use arrow keys to change page
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        if (page != Math.ceil(total / limit)) {
+          handleChangePage(null, page + 1);
+        }
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        if (page != 0) {
+          handleChangePage(null, page - 1);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [total]);
+
   return (
     <div>
       <hr />
       <h1 align="center">JOURNEYS</h1>
       <hr />
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} m="100">
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
             <TableRow>
