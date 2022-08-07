@@ -7,10 +7,17 @@ import TableContainer from "@mui/material/TableContainer";
 
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
+import { TableFooter } from "@mui/material";
 
-export default function CustomPaginationActionsTable({ journeys }) {
+export default function CustomPaginationActionsTable({
+  journeys,
+  page,
+  handleChangePage,
+  handleRowsPerPage,
+  limit,
+}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -28,7 +35,6 @@ export default function CustomPaginationActionsTable({ journeys }) {
         </TableHead>
         <TableBody>
           {journeys.map((row) => (
-            // TODO: id
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.departureTime}
@@ -56,6 +62,16 @@ export default function CustomPaginationActionsTable({ journeys }) {
           ))}
         </TableBody>
       </Table>
+      <TableFooter>
+        <TablePagination
+          component="div"
+          count={800000}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={limit}
+          onRowsPerPageChange={handleRowsPerPage}
+        />
+      </TableFooter>
     </TableContainer>
   );
 }

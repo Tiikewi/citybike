@@ -3,10 +3,6 @@ import JourneyList from "./JourneyList";
 import axios from "axios";
 
 function App() {
-  function createData(dep, ret, depID, depName, retID, retName, dist, dur) {
-    return { dep, ret, depID, depName, retID, retName, dist, dur };
-  }
-
   const [journeys, setJourneys] = useState([]);
   const [journeyPage, setJourneyPage] = useState(0);
   const [journeyLimit, setJourneyLimit] = useState(10);
@@ -22,9 +18,22 @@ function App() {
     fetchJourneys();
   }, [journeyLimit, journeyPage]);
 
+  const handlePageChange = (event, newPage) => {
+    setJourneyPage(newPage);
+  };
+  const handleRowsPerPage = (event, newLimit) => {
+    setJourneyLimit(newLimit);
+  };
+
   return (
     <div>
-      <JourneyList journeys={journeys}></JourneyList>
+      <JourneyList
+        journeys={journeys}
+        page={journeyPage}
+        handleChangePage={handlePageChange}
+        handleRowsPerPage={handleRowsPerPage}
+        limit={journeyLimit}
+      ></JourneyList>
     </div>
   );
 }
