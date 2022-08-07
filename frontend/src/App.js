@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import JourneyList from "./JourneyList";
 import axios from "axios";
+import MyNavbar from "./MyNavbar";
 
 function App() {
   const [journeys, setJourneys] = useState([]);
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <div>
+      <MyNavbar></MyNavbar>
       <JourneyList
         journeys={journeys}
         page={journeyPage}
