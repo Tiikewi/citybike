@@ -9,15 +9,21 @@ const MyNavbar = () => {
   return (
     <Navbar variant="dark" bg="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home" className="navItem">
+        <Navbar.Brand as={Link} to="/">
           Citybike
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/journeys">Journeys</Nav.Link>
-            <Nav.Link href="/stations">Stations</Nav.Link>
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/journeys">
+              Journeys
+            </Nav.Link>
+            <Nav.Link as={Link} to="/stations">
+              Stations
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
