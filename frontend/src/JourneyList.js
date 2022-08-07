@@ -25,6 +25,20 @@ export default function CustomPaginationActionsTable({
 
     return `${minutes} min ${seconds} s`;
   };
+
+  const formatDate = (dateString) => {
+    // Format the date hard way because in data, month starts from 1 and in js-date from 0.
+    const dts = dateString.split("T");
+    const dateSplit = dts[0].split("-");
+    // Remove trailing 'Z'
+    const time = dts[1].slice(0, -1);
+
+    const year = dateSplit[0];
+    const month = dateSplit[1];
+    const day = dateSplit[2];
+
+    return `${day}.${month}.${year} ${time}`;
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -44,9 +58,11 @@ export default function CustomPaginationActionsTable({
           {journeys.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.departureTime}
+                {formatDate(row.departureTime)}
               </TableCell>
-              <TableCell style={{ width: 160 }}>{row.returnTime}</TableCell>
+              <TableCell style={{ width: 160 }}>
+                {formatDate(row.returnTime)}
+              </TableCell>
               <TableCell style={{ width: 70 }} align="center">
                 {row.departureStationId}
               </TableCell>
