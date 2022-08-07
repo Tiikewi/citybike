@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import JourneyList from "./JourneyList";
 import axios from "axios";
 import MyNavbar from "./MyNavbar";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [journeys, setJourneys] = useState([]);
@@ -32,17 +33,28 @@ function App() {
   };
 
   return (
-    <div>
-      <MyNavbar></MyNavbar>
-      <JourneyList
-        journeys={journeys}
-        page={journeyPage}
-        handleChangePage={handlePageChange}
-        handleRowsPerPage={handleRowsPerPage}
-        limit={journeyLimit}
-        total={totalJourneys}
-      ></JourneyList>
-    </div>
+    <Router>
+      <div>
+        <MyNavbar />
+        <Routes>
+          <Route path="/" element={<h1>home</h1>} />
+          <Route
+            path="/journeys"
+            element={
+              <JourneyList
+                journeys={journeys}
+                page={journeyPage}
+                handleChangePage={handlePageChange}
+                handleRowsPerPage={handleRowsPerPage}
+                limit={journeyLimit}
+                total={totalJourneys}
+              ></JourneyList>
+            }
+          />
+          <Route path="/stations" element={<h1>stations</h1>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -4,7 +4,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
@@ -40,63 +39,68 @@ export default function CustomPaginationActionsTable({
     return `${day}.${month}.${year} ${time}`;
   };
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Departure</TableCell>
-            <TableCell>Return</TableCell>
-            <TableCell>Departure Station ID</TableCell>
-            <TableCell>Departure Station Name</TableCell>
-            <TableCell>Return Station ID</TableCell>
-            <TableCell>Return Station Name</TableCell>
-            <TableCell>Distance</TableCell>
-            <TableCell>Duration</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {journeys.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {formatDate(row.departureTime)}
-              </TableCell>
-              <TableCell style={{ width: 160 }}>
-                {formatDate(row.returnTime)}
-              </TableCell>
-              <TableCell style={{ width: 70 }} align="center">
-                {row.departureStationId}
-              </TableCell>
-              <TableCell style={{ width: 160 }}>
-                {row.departureStationName}
-              </TableCell>
-              <TableCell style={{ width: 70 }} align="center">
-                {row.returnStationId}
-              </TableCell>
-              <TableCell style={{ width: 160 }}>
-                {row.returnStationName}
-              </TableCell>
-              <TableCell style={{ width: 160 }}>
-                {(row.distance / 100).toFixed(2)} km
-              </TableCell>
-              <TableCell style={{ width: 160 }}>
-                {formatDuration(row.duration)}
-              </TableCell>
+    <div>
+      <hr />
+      <h1 align="center">JOURNEYS</h1>
+      <hr />
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Departure</TableCell>
+              <TableCell>Return</TableCell>
+              <TableCell>Departure Station ID</TableCell>
+              <TableCell>Departure Station Name</TableCell>
+              <TableCell>Return Station ID</TableCell>
+              <TableCell>Return Station Name</TableCell>
+              <TableCell>Distance</TableCell>
+              <TableCell>Duration</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[10]}
-              count={total}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={limit}
-              onRowsPerPageChange={handleRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {journeys.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  {formatDate(row.departureTime)}
+                </TableCell>
+                <TableCell style={{ width: 160 }}>
+                  {formatDate(row.returnTime)}
+                </TableCell>
+                <TableCell style={{ width: 70 }} align="center">
+                  {row.departureStationId}
+                </TableCell>
+                <TableCell style={{ width: 160 }}>
+                  {row.departureStationName}
+                </TableCell>
+                <TableCell style={{ width: 70 }} align="center">
+                  {row.returnStationId}
+                </TableCell>
+                <TableCell style={{ width: 160 }}>
+                  {row.returnStationName}
+                </TableCell>
+                <TableCell style={{ width: 160 }}>
+                  {(row.distance / 100).toFixed(2)} km
+                </TableCell>
+                <TableCell style={{ width: 160 }}>
+                  {formatDuration(row.duration)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[10]}
+                count={total}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={limit}
+                onRowsPerPageChange={handleRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
