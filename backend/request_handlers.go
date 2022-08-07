@@ -8,6 +8,7 @@ import (
 )
 
 func GETHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	limit := r.URL.Query().Get("limit")
 	page := r.URL.Query().Get("page")
 
