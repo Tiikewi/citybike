@@ -10,114 +10,7 @@ import Paper from "@mui/material/Paper";
 
 import TableHead from "@mui/material/TableHead";
 
-function createData(dep, ret, depID, depName, retID, retName, dist, dur) {
-  return { dep, ret, depID, depName, retID, retName, dist, dur };
-}
-
-const rows = [
-  createData(
-    "21-02-2020 00:01",
-    "21-02-2020 00:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "120",
-    "500"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "22-02-2020 00:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "122",
-    "502"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-  createData(
-    "22-02-2020 00:01",
-    "23-02-2020 10:02",
-    "1",
-    "Lahto Station",
-    "2",
-    "Paluu Station",
-    "124",
-    "504"
-  ),
-];
-
-export default function CustomPaginationActionsTable() {
+export default function CustomPaginationActionsTable({ journeys }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -134,22 +27,31 @@ export default function CustomPaginationActionsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
+          {journeys.map((row) => (
+            // TODO: id
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.dep}
+                {row.departureTime}
               </TableCell>
-              <TableCell style={{ width: 160 }}>{row.ret}</TableCell>
+              <TableCell style={{ width: 160 }}>{row.returnTime}</TableCell>
               <TableCell style={{ width: 70 }} align="center">
-                {row.depID}
+                {row.departureStationId}
               </TableCell>
-              <TableCell style={{ width: 160 }}>{row.depName}</TableCell>
+              <TableCell style={{ width: 160 }}>
+                {row.departureStationName}
+              </TableCell>
               <TableCell style={{ width: 70 }} align="center">
-                {row.retID}
+                {row.returnStationId}
               </TableCell>
-              <TableCell style={{ width: 160 }}>{row.retName}</TableCell>
-              <TableCell style={{ width: 160 }}>{row.dist} meters</TableCell>
-              <TableCell style={{ width: 160 }}>{row.dur} seconds</TableCell>
+              <TableCell style={{ width: 160 }}>
+                {row.returnStationName}
+              </TableCell>
+              <TableCell style={{ width: 160 }}>
+                {row.distance} meters
+              </TableCell>
+              <TableCell style={{ width: 160 }}>
+                {row.duration} seconds
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
