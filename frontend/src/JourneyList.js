@@ -18,6 +18,12 @@ export default function CustomPaginationActionsTable({
   handleRowsPerPage,
   limit,
 }) {
+  const formatDuration = (time) => {
+    var seconds = time % 60;
+    var minutes = (time / 60).toFixed(0);
+
+    return `${minutes} min ${seconds} s`;
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -53,25 +59,27 @@ export default function CustomPaginationActionsTable({
                 {row.returnStationName}
               </TableCell>
               <TableCell style={{ width: 160 }}>
-                {row.distance} meters
+                {(row.distance / 100).toFixed(2)} km
               </TableCell>
               <TableCell style={{ width: 160 }}>
-                {row.duration} seconds
+                {formatDuration(row.duration)}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[10]}
+              count={800000}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={limit}
+              onRowsPerPageChange={handleRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
-      <TableFooter>
-        <TablePagination
-          component="div"
-          count={800000}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={limit}
-          onRowsPerPageChange={handleRowsPerPage}
-        />
-      </TableFooter>
     </TableContainer>
   );
 }

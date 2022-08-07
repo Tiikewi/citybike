@@ -22,6 +22,7 @@ function App() {
     setJourneyPage(newPage);
   };
   const handleRowsPerPage = (event, newLimit) => {
+    console.log("new limit:", newLimit);
     setJourneyLimit(newLimit);
   };
 

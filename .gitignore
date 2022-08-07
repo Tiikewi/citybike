@@ -23,5 +23,7 @@ go.work
 
 
 *.csv
+*.sql
+*/.DS_Store
 
 
