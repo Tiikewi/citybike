@@ -10,7 +10,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
 import { TableFooter } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "react-bootstrap/Button";
+import Modal from "./Modal";
 
 export default function StationList({
   stations,
@@ -44,10 +44,6 @@ export default function StationList({
     };
   }, [total, page]);
 
-  const infoBtnHandler = () => {
-    console.log("Info btn clicked");
-  };
-
   return (
     <div>
       <hr />
@@ -72,11 +68,7 @@ export default function StationList({
                     {row.stationName}
                   </TableCell>
                   <TableCell style={{ width: 200 }}>{row.city}</TableCell>
-                  <TableCell align="center">
-                    <Button variant="info" onClick={infoBtnHandler}>
-                      Station Info
-                    </Button>{" "}
-                  </TableCell>
+                  <TableCell align="center">{Modal()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
