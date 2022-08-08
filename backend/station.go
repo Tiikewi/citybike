@@ -5,7 +5,7 @@ type Station struct {
 	ID                 int     `json:"id"`
 	StationName        string  `json:"stationName"`
 	StationNameSwedish string  `json:"stationNameSwedish"`
-	stationNameEnglish string  `json:"stationNameEnglish"`
+	StationNameEnglish string  `json:"stationNameEnglish"`
 	Address            string  `json:"address"`
 	AddressSwedish     string  `json:"addressSwedish"`
 	City               string  `json:"city"`

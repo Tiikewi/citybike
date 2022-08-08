@@ -45,6 +45,20 @@ func getJourneys(p Pagination) *sql.Rows {
 
 	return rows
 }
+func getStations(p Pagination) *sql.Rows {
+	db := OpenConnection()
+
+	sqlStatement := `SELECT * FROM station WHERE fid > $1 ORDER BY fid LIMIT $2;`
+	rows, err := db.Query(sqlStatement, p.Offset, p.Limit)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	log.Println("GET stations")
+
+	return rows
+}
 
 func getJourneyAmount() *sql.Row {
 	db := OpenConnection()
