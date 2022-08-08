@@ -10,22 +10,16 @@ import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
 import { TableFooter } from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "react-bootstrap/Button";
 
-export default function JourneyList({
-  journeys,
+export default function StationList({
+  stations,
   page,
   handleChangePage,
   handleRowsPerPage,
   limit,
-  total,
+  total = 457,
 }) {
-  const formatDuration = (time) => {
-    var seconds = time % 60;
-    var minutes = (time / 60).toFixed(0);
-
-    return `${minutes} min ${seconds} s`;
-  };
-
   useEffect(() => {
     const keyDownHandler = (event) => {
       // Use arrow keys to change page
@@ -50,44 +44,38 @@ export default function JourneyList({
     };
   }, [total, page]);
 
+  const infoBtnHandler = () => {
+    console.log("Info btn clicked");
+  };
+
   return (
     <div>
       <hr />
-      <h1 align="center">JOURNEYS</h1>
+      <h1 align="center">STATIONS</h1>
       <hr />
       <Box sx={{ m: 4 }}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Departure Station ID</TableCell>
-                <TableCell>Departure Station Name</TableCell>
-                <TableCell>Return Station ID</TableCell>
-                <TableCell>Return Station Name</TableCell>
-                <TableCell>Distance</TableCell>
-                <TableCell>Duration</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {journeys.map((row) => (
+              {stations.map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell style={{ width: 50 }} align="center">
-                    {row.departureStationId}
+                  <TableCell style={{ width: 100 }}>{row.id}</TableCell>
+                  <TableCell style={{ width: 200 }}>
+                    {row.stationName}
                   </TableCell>
-                  <TableCell style={{ width: 100 }}>
-                    {row.departureStationName}
-                  </TableCell>
-                  <TableCell style={{ width: 50 }} align="center">
-                    {row.returnStationId}
-                  </TableCell>
-                  <TableCell style={{ width: 100 }}>
-                    {row.returnStationName}
-                  </TableCell>
-                  <TableCell style={{ width: 50 }}>
-                    {(row.distance / 100).toFixed(2)} km
-                  </TableCell>
-                  <TableCell style={{ width: 50 }}>
-                    {formatDuration(row.duration)}
+                  <TableCell style={{ width: 200 }}>{row.city}</TableCell>
+                  <TableCell align="center">
+                    <Button variant="info" onClick={infoBtnHandler}>
+                      Station Info
+                    </Button>{" "}
                   </TableCell>
                 </TableRow>
               ))}
