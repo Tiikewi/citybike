@@ -10,9 +10,9 @@ import (
 	"time"
 )
 
-func readCSV() {
+func readJourneyCSV(fileName string) {
 	// open file
-	f, err := os.Open("2021-05.csv")
+	f, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,75 @@ func readCSV() {
 
 		}
 	}
-	fmt.Println("CSV file added to db")
+	fmt.Println("journey CSV file added to db")
+	defer db.Close()
+}
+
+func readStationCSV(fileName string) {
+	// open file
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer f.Close()
+
+	csvReader := csv.NewReader(f)
+	// skip first line
+	if _, err := csvReader.Read(); err != nil {
+		panic(err)
+	}
+
+	db := OpenConnection()
+
+	for {
+		line, err := csvReader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fID := line[0]
+		ID := line[1]
+		stationName := line[2]
+		stationNameSwedish := line[3]
+		stationNameEnglish := line[4]
+		address := line[5]
+		addressSwedish := line[6]
+		city := line[7]
+		citySwedish := line[8]
+		operator := line[9]
+		capacity := line[10]
+		xCoord := line[11]
+		yCoord := line[12]
+
+		sqlStatement := `INSERT INTO station
+				VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);`
+
+		_, err = db.Exec(sqlStatement,
+			fID,
+			ID,
+			stationName,
+			stationNameSwedish,
+			stationNameEnglish,
+			address,
+			addressSwedish,
+			city,
+			citySwedish,
+			operator,
+			capacity,
+			xCoord,
+			yCoord)
+
+		if err != nil {
+			panic(err)
+		}
+
+	}
+
+	fmt.Println("Station CSV file added to db")
 	defer db.Close()
 }
 

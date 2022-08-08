@@ -9,7 +9,8 @@ import (
 
 func main() {
 	// -----UNCOMMENT IF YOU WANT TO ADD CSV FILES TO DATABASE------
-	// readCSV()
+	// readJourneyCSV("fileName")
+	// readStationCSV("fileName")
 	http.HandleFunc("/api", GETHandler)
 	http.HandleFunc("/api/journey/rows", journeyAmountHandler)
 	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
