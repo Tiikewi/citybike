@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func GETHandler(w http.ResponseWriter, r *http.Request) {
+func journeyGETHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	limit := r.URL.Query().Get("limit")
 	page := r.URL.Query().Get("page")
@@ -40,6 +40,20 @@ func GETHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(journeyBytes)
 
 	defer rows.Close()
+}
+
+func journeyAmountHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	row := getJourneyAmount()
+	var amount []byte
+
+	if err := row.Scan(&amount); err != nil {
+		panic("Error when fetching amount of journeys!")
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(amount)
 }
 
 func getUrlParams(limit string, page string) PaginationReq {

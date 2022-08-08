@@ -20,7 +20,7 @@ function App() {
     // get 10 first journeys
     async function getJourneys() {
       const journeyRes = await axios.get(
-        `api?limit=${journeyLimit}&page=${journeyPage}`
+        `api/journeys?limit=${journeyLimit}&page=${journeyPage}`
       );
       setJourneys(journeyRes.data);
 
