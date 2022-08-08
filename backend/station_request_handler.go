@@ -45,3 +45,20 @@ func stationGETHandler(w http.ResponseWriter, r *http.Request) {
 
 	defer rows.Close()
 }
+
+func stationGETdepartures(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	id := r.URL.Query().Get("id")
+	typeOf := r.URL.Query().Get("type")
+
+	row := getDepartureCount(id, typeOf)
+	var amount []byte
+
+	if err := row.Scan(&amount); err != nil {
+		panic("Error when fetching amount of departures!")
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(amount)
+}

@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/api/journeys", journeyGETHandler)
 	http.HandleFunc("/api/journey/rows", journeyAmountHandler)
 	http.HandleFunc("/api/stations", stationGETHandler)
+	http.HandleFunc("/api/stations/departure", stationGETdepartures)
 
 	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
 }

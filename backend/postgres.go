@@ -70,3 +70,20 @@ func getJourneyAmount() *sql.Row {
 
 	return row
 }
+func getDepartureCount(stationId string, typeOf string) *sql.Row {
+	db := OpenConnection()
+
+	var row *sql.Row
+
+	if typeOf == "return" {
+		row = db.QueryRow(`SELECT count(*) from journey INNER JOIN station ON journey.return_station_id = station.id AND station.id = $1;`, stationId)
+	} else {
+		row = db.QueryRow(`SELECT count(*) from journey INNER JOIN station ON journey.departure_station_id = station.id AND station.id = $1;`, stationId)
+	}
+
+	defer db.Close()
+
+	log.Println("GET dep / ret amount")
+
+	return row
+}
