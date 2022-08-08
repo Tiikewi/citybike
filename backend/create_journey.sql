@@ -4,7 +4,7 @@ INSERT INTO journey VALUES ('01-01-2020T00:00:00', '01-01-2020T01:01:01', '1', '
 
 CREATE TABLE station 
 (fid int primary key, id int, station_name varchar(60),
-station_name_swedish varchar(60), address varchar(60),
-address_swedish varchar(60), city_name varchar(60),
-city_name_swedish varchar(60), operator varchar(60),
+station_name_swedish varchar(60),station_name_english varchar(60), address varchar(60),
+address_swedish varchar(60), city varchar(60),
+city_swedish varchar(60), operator varchar(60),
 capacity int, x_coord float, y_coord float);
