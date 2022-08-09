@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,16 +12,33 @@ import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
 import { TableFooter } from "@mui/material";
 import Box from "@mui/material/Box";
-import Modal from "./Modal";
+import Button from "@mui/material/Button";
+import axios from "axios";
 
-export default function StationList({
-  stations,
-  page,
-  handleChangePage,
-  handleRowsPerPage,
-  limit,
-  total = 457,
-}) {
+export default function StationList({}) {
+  const [stations, setStations] = useState([]);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(457); // TODO get amount
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getData = async () => {
+      axios.defaults.baseURL = "http://[::1]:8080/";
+      // get 10 first stations
+      const stationRes = await axios.get(
+        `api/stations?limit=${limit}&page=${page}`
+      );
+      setStations(stationRes.data);
+    };
+    getData();
+  }, [limit, page]);
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
   useEffect(() => {
     const keyDownHandler = (event) => {
       // Use arrow keys to change page
@@ -43,6 +62,10 @@ export default function StationList({
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, [total, page]);
+
+  const stationBtnHandler = (s) => {
+    navigate(`/stations/${s.id}`);
+  };
 
   return (
     <div>
@@ -68,7 +91,14 @@ export default function StationList({
                     {row.stationName}
                   </TableCell>
                   <TableCell style={{ width: 200 }}>{row.city}</TableCell>
-                  <TableCell align="center">{Modal()}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      onClick={(event) => stationBtnHandler(row)}
+                      variant="outlined"
+                    >
+                      More
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -78,9 +108,8 @@ export default function StationList({
                   rowsPerPageOptions={[10]}
                   count={total}
                   page={page}
-                  onPageChange={handleChangePage}
+                  onPageChange={handlePageChange}
                   rowsPerPage={limit}
-                  onRowsPerPageChange={handleRowsPerPage}
                 />
               </TableRow>
             </TableFooter>

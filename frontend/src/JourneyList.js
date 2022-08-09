@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,15 +10,39 @@ import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
 import { TableFooter } from "@mui/material";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
-export default function JourneyList({
-  journeys,
-  page,
-  handleChangePage,
-  handleRowsPerPage,
-  limit,
-  total,
-}) {
+export default function JourneyList({}) {
+  const [journeys, setJourney] = useState([]);
+  const [totalJourneys, setTotalJourneys] = useState(0);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+
+  useEffect(() => {
+    axios.defaults.baseURL = "http://[::1]:8080/";
+    const getData = async () => {
+      // get 10 first journey
+      const journeyRes = await axios.get(
+        `api/journeys?limit=${limit}&page=${page}`
+      );
+      setJourney(journeyRes.data);
+    };
+    getData();
+  }, [page, limit]);
+
+  useEffect(() => {
+    axios.defaults.baseURL = "http://[::1]:8080/";
+    const getData = async () => {
+      const amountRes = await axios.get("api/journey/rows");
+      setTotalJourneys(amountRes.data);
+    };
+    getData();
+  }, []);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
   const formatDuration = (time) => {
     var seconds = time % 60;
     var minutes = (time / 60).toFixed(0);
@@ -31,14 +55,14 @@ export default function JourneyList({
       // Use arrow keys to change page
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        if (page !== Math.floor(total / limit)) {
-          handleChangePage(null, page + 1);
+        if (page !== Math.floor(totalJourneys / limit)) {
+          handlePageChange(page + 1);
         }
       }
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         if (page !== 0) {
-          handleChangePage(null, page - 1);
+          handlePageChange(page - 1);
         }
       }
     };
@@ -48,7 +72,7 @@ export default function JourneyList({
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [total, page]);
+  }, [totalJourneys, page]);
 
   return (
     <div>
@@ -96,11 +120,10 @@ export default function JourneyList({
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[10]}
-                  count={total}
+                  count={totalJourneys}
                   page={page}
-                  onPageChange={handleChangePage}
+                  onPageChange={handlePageChange}
                   rowsPerPage={limit}
-                  onRowsPerPageChange={handleRowsPerPage}
                 />
               </TableRow>
             </TableFooter>
