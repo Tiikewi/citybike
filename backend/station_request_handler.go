@@ -52,7 +52,7 @@ func stationGETHandler(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 }
 
-func stationGETdepartures(w http.ResponseWriter, r *http.Request) {
+func stationGETcounts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	id := r.URL.Query().Get("id")
