@@ -4,13 +4,17 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
+
+	_ "github.com/joho/godotenv/autoload"
+	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
+var (
+	host     = os.Getenv("DB_URL")
 	port     = 5432
-	user     = "postgres"
-	password = "postgres"
+	user     = os.Getenv("DB_USERNAME")
+	password = os.Getenv("DB_PASSWORD")
 	dbname   = "postgres"
 )
 
