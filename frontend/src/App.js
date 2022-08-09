@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
-import JourneyList from "./JourneyList";
-import axios from "axios";
-import MyNavbar from "./MyNavbar";
+import React from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import JourneyList from "./JourneyList";
+import MyNavbar from "./MyNavbar";
 import StationList from "./StationList";
 import SingleStation from "./SingleStation";
 

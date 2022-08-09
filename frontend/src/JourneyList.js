@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import TablePagination from "@mui/material/TablePagination";
-import TableHead from "@mui/material/TableHead";
-import { TableFooter } from "@mui/material";
-import Box from "@mui/material/Box";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  TablePagination,
+  TableHead,
+  TableFooter,
+  Box,
+} from "@mui/material/";
+
 import axios from "axios";
 
 export default function JourneyList({}) {
