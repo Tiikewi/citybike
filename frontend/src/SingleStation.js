@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Typography } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Typography, Box } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
 
 const SingleStation = () => {

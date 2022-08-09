@@ -53,9 +53,9 @@ export default function JourneyList({}) {
     return `${minutes} min ${seconds} s`;
   };
 
+  // Listen arrow keys
   useEffect(() => {
     const keyDownHandler = (event) => {
-      // Use arrow keys to change page
       if (event.key === "ArrowRight") {
         event.preventDefault();
         if (page !== Math.floor(totalJourneys / limit)) {

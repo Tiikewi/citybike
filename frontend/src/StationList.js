@@ -13,6 +13,7 @@ import {
   TableHead,
   TableFooter,
   Box,
+  Button,
 } from "@mui/material/";
 import axios from "axios";
 
@@ -40,19 +41,20 @@ export default function StationList({}) {
     setPage(newPage);
   };
 
+  // Listen arrow keys
   useEffect(() => {
     const keyDownHandler = (event) => {
       // Use arrow keys to change page
       if (event.key === "ArrowRight") {
         event.preventDefault();
         if (page !== Math.floor(total / limit)) {
-          handleChangePage(null, page + 1);
+          handlePageChange(null, page + 1);
         }
       }
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         if (page !== 0) {
-          handleChangePage(null, page - 1);
+          handlePageChange(null, page - 1);
         }
       }
     };
