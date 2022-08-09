@@ -91,3 +91,15 @@ func getDepartureCount(stationId string, typeOf string) *sql.Row {
 
 	return row
 }
+
+func getSingleStation(id string) *sql.Row {
+	db := OpenConnection()
+
+	row := db.QueryRow(`SELECT * FROM station WHERE id = $1`, id)
+
+	defer db.Close()
+
+	log.Println("GET single station")
+
+	return row
+}
