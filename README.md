@@ -6,18 +6,6 @@ Citybike is app for displaying data of journeys made with city bikes in Helsinki
 
 ## Installation
 
-To install and run backend, you need to have go compiler installed and **insert .env file** to backend/ directory. Then from root directory, run:
-
-```bash
-cd backend/
-go install
-go run *.go
-```
-
-Backend is now running and ready for connections from frontend.
-
----
-
 To install and run frontend, run from root directory:
 
 ```bash
@@ -27,14 +15,15 @@ npm start
 ```
 
 Frontend should now be up and running. You can access it from **localhost:3000**
+Backend of this app is running in cloud.
 
 ## Technologies
 
 ### Go
 
 Backend is build with Go, and it serves as simple API endpoint for fetching journey and station data from backend.
-
-Backend also includes csv file handler for validating journey data, as instructed in .
+Backend also includes csv file handler for validating journey data, as instructed in exercise insturctions.
+This Go backend is running in cloud using AWS EC2.
 
 ### Postgres
 
@@ -48,7 +37,7 @@ Frontend is made with React
 
 ## TODOS
 
-- Make code more modular.
+- Make code more modular. Including the moving of frontend api calls to own service.
 - Improve api calls on front.
 - Implement better error handling, especially on frontend.
 - Implement more features
