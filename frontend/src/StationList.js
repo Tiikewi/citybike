@@ -27,7 +27,7 @@ export default function StationList({}) {
 
   useEffect(() => {
     const getData = async () => {
-      axios.defaults.baseURL = "http://[::1]:8080/";
+      axios.defaults.baseURL = `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_PORT}`;
       // get 10 first stations
       const stationRes = await axios.get(
         `api/stations?limit=${limit}&page=${page}`

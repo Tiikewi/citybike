@@ -11,5 +11,5 @@ func main() {
 	http.HandleFunc("/api/stations", stationGETHandler)
 	http.HandleFunc("/api/stations/counts", stationGETcounts)
 
-	log.Fatal(http.ListenAndServe("[::1]:8080", nil))
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }

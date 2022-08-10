@@ -15,7 +15,7 @@ const SingleStation = () => {
   useEffect(() => {
     // TODO: Change to use only one api call.
 
-    axios.defaults.baseURL = "http://[::1]:8080/";
+    axios.defaults.baseURL = `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_PORT}`;
     const getData = async () => {
       const stationRes = await axios.get(`api/stations?id=${stationID.id}`);
       setStation(stationRes.data);

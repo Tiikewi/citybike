@@ -22,7 +22,8 @@ export default function JourneyList({}) {
   const [limit, setLimit] = useState(10);
 
   useEffect(() => {
-    axios.defaults.baseURL = "http://[::1]:8080/";
+    axios.defaults.baseURL = `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_PORT}`;
+    console.log(axios.defaults.baseURL);
     const getData = async () => {
       // get 10 first journey
       const journeyRes = await axios.get(
@@ -34,7 +35,6 @@ export default function JourneyList({}) {
   }, [page, limit]);
 
   useEffect(() => {
-    axios.defaults.baseURL = "http://[::1]:8080/";
     const getData = async () => {
       const amountRes = await axios.get("api/journey/rows");
       setTotalJourneys(amountRes.data);
