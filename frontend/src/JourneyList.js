@@ -59,13 +59,13 @@ export default function JourneyList({}) {
       if (event.key === "ArrowRight") {
         event.preventDefault();
         if (page !== Math.floor(totalJourneys / limit)) {
-          handlePageChange(page + 1);
+          handlePageChange(null, page + 1);
         }
       }
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         if (page !== 0) {
-          handlePageChange(page - 1);
+          handlePageChange(null, page - 1);
         }
       }
     };
