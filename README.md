@@ -6,7 +6,7 @@ Citybike is app for displaying data of journeys made with city bikes in Helsinki
 
 ## Installation
 
-To install and run frontend, run from root directory:
+To install and run frontend, run from this app's root directory:
 
 ```bash
 cd frontend/
