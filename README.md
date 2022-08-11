@@ -14,7 +14,7 @@ npm install
 npm start
 ```
 
-Frontend should now be up and running. You can access it from **localhost:3000**
+Frontend should now be up and running. You can access it from **localhost:3000**.
 Backend of this app is running in cloud.
 
 ## Technologies
