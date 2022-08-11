@@ -10,6 +10,12 @@ const Home = () => {
         of the table.
       </span>
       <hr />
+      <h3>Make sure you did insert .env file to directory frontend/</h3>
+      <p>
+        If received by email, make sure env file is named ".env" with dot and
+        not just "env".{" "}
+      </p>
+      <hr />
       <h3>Todos</h3>
       <span>
         <ul>
