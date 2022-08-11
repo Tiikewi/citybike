@@ -42,7 +42,7 @@ export default function JourneyList({}) {
     getData();
   }, []);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 
